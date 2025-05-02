@@ -84,7 +84,7 @@ M.create_final_config = function(user_config)
 		cert_path = nil,
 		-- Show configuration warnings
 		warnings = true,
-		picker = "telescope",
+		picker = "builtin",
 	}
 	local final = vim.tbl_extend("keep", user_config or {}, default_config)
 	-- Set warning suppression if requested by the user

@@ -61,6 +61,18 @@ M.execute_command = function(final_config, api_key, request_method, command)
 end
 
 M.pickers = {
+	builtin = {
+		display_name = "vim.ui.select",
+		pick = function(command_name_id_map, cb)
+			vim.ui.select(vim.tbl_keys(command_name_id_map), {
+				prompt = "Obsidian Commands",
+			}, function(selection)
+				if selection then
+					cb(command_name_id_map[selection])
+				end
+			end)
+		end,
+	},
 	telescope = {
 		requires = "telescope",
 		display_name = "telescope.nvim",
@@ -117,7 +129,12 @@ M.pickers = {
 M.pick_command = function(final_config, api_key)
 	local picker = M.pickers[final_config.picker]
 
-	if picker.plugin_name and not pcall(require, picker.requires) then
+	if not picker then
+		vim.notify(final_config.picker .. " is not a valid picker")
+		return
+	end
+
+	if picker.requires and not pcall(require, picker.requires) then
 		vim.notify(picker.display_name .. " is not installed")
 		return
 	end
