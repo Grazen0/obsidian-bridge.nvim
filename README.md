@@ -56,8 +56,8 @@ export OBSIDIAN_REST_API_KEY="your_api_key_here"
 require('packer').startup(function()
     use {
       'oflisback/obsidian-bridge.nvim',
-      requires = { "nvim-telescope/telescope.nvim" },
-      -- requires = { "ibhagwan/fzf-lua" }, -- For picker = "fzf_lua" (see below)
+      -- requires = { "nvim-telescope/telescope.nvim" }, -- For picker = "telescope"
+      -- requires = { "ibhagwan/fzf-lua" }, -- For picker = "fzf_lua"
       config = function() require('obsidian-bridge').setup() end
       requires = {
         "nvim-lua/plenary.nvim",
@@ -72,9 +72,10 @@ end)
   <summary>vim-plug</summary>
 
 ```vim
-Plug 'nvim-telescope/telescope.nvim'
-" For picker = "fzf_lua" (see below)
-" Plug 'ibhagwan/fzf-lua' 
+" For picker = "telescope"
+" Plug 'nvim-telescope/telescope.nvim'
+" For picker = "fzf_lua"
+" Plug 'ibhagwan/fzf-lua'
 Plug 'oflisback/obsidian-bridge.nvim'
   Plug 'nvim-lua/plenary.nvim'
 ```
@@ -92,14 +93,14 @@ local bridge_settings = {
   scroll_sync = false, -- See "Sync of buffer scrolling" section below
   cert_path = nil, -- See "SSL configuration" section below
   warnings = true, -- Show misconfiguration warnings
-  picker = "telescope", -- Picker to use with ObsidianBridgePickCommand ("telescope" | "fzf_lua")
+  picker = "builtin", -- Picker to use with ObsidianBridgePickCommand ("builtin" | "telescope" | "fzf_lua")
 }
 
 -- If you are using lazy in your config,
 -- for example in lua/plugins/bridge.lua
 return {
   "oflisback/obsidian-bridge.nvim",
-  dependencies = { "nvim-telescope/telescope.nvim" },
+  -- dependencies = { "nvim-telescope/telescope.nvim" }, -- For picker = "telescope"
   -- dependencies = { "ibhagwan/fzf-lua" }, -- For picker = "fzf_lua"
   opts = bridge_settings,
   event = {
